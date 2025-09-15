@@ -5,13 +5,13 @@ import "package:quiz/data/qa_data.dart";
 import "package:quiz/utils/buttons.dart";
 
 class QueScreen extends StatefulWidget {
-  const QueScreen({
+  const QueScreen(
+    this.endQuiz, {
     super.key,
-    required this.onSelectAnswer,
     //
   });
 
-  final void Function(String answer) onSelectAnswer;
+  final void Function() endQuiz;
 
   @override
   State<QueScreen> createState() => _QueScreenState();
@@ -20,19 +20,16 @@ class QueScreen extends StatefulWidget {
 class _QueScreenState extends State<QueScreen> {
   var index = 0;
 
-  void answerQuestion(String answer) {
-    if (index < QAdata.length - 1) {
-      setState(() {
-        index += 1;
-      });
-    } else {
-      widget.onSelectAnswer(answer);
-    }
+  void updateIndex() {
+    setState(() {
+      index += 1;
+    });
+    if (index >= quiz.length) widget.endQuiz();
   }
 
   @override
   Widget build(BuildContext context) {
-    var qa = QAdata[index];
+    var qa = quiz[index];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -56,7 +53,8 @@ class _QueScreenState extends State<QueScreen> {
             return AnswerButton(
               answer,
               onTap: () {
-                answerQuestion(answer);
+                qa.submitAnswer(answer);
+                updateIndex();
               },
               // fontSize: 14,
             );
