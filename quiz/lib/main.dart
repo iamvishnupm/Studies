@@ -1,23 +1,11 @@
 import "package:flutter/material.dart";
-
-import "package:quiz/utils/gradient_container.dart";
-
-import "package:quiz/screens/start_screen.dart";
-import "package:quiz/screens/que_screen.dart";
-import "package:quiz/screens/result_screen.dart";
-
-// import "package:quiz/data/qa_data.dart";
-// import "package:quiz/models/qa.dart";
-
-// =============================================================
+import "package:temp/utils/gradient_container.dart";
+import "package:temp/screens/start_screen.dart";
+import "package:temp/screens/quiz_screen.dart";
+import "package:temp/screens/result_screen.dart";
 
 void main() {
-  runApp(
-    MaterialApp(
-      //
-      home: QuizApp(),
-    ),
-  );
+  runApp(QuizApp());
 }
 
 class QuizApp extends StatefulWidget {
@@ -33,12 +21,12 @@ class _QuizAppState extends State<QuizApp> {
   @override
   void initState() {
     super.initState();
-    activeScreen = StartScreen(startQuiz);
+    activeScreen = StartScreen(onPressed: startQuiz);
   }
 
   void startQuiz() {
     setState(() {
-      activeScreen = QueScreen(endQuiz);
+      activeScreen = QuizScreen(endQuiz);
     });
   }
 
@@ -50,14 +38,17 @@ class _QuizAppState extends State<QuizApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GradientContainer(
-        colors: [
-          const Color.fromARGB(255, 41, 12, 92),
-          const Color.fromARGB(255, 98, 55, 172),
-          //
-        ],
-        child: Center(child: activeScreen),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: GradientContainer(
+          colors: [
+            const Color.fromARGB(255, 59, 18, 130),
+            const Color.fromARGB(255, 100, 60, 169),
+            //
+          ],
+          child: activeScreen,
+        ),
       ),
     );
   }

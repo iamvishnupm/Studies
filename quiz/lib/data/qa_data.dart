@@ -1,4 +1,4 @@
-import "package:quiz/models/qa.dart";
+import "package:temp/models/qa.dart";
 
 const qaData = [
   {
@@ -53,8 +53,4 @@ const qaData = [
   },
 ];
 
-/* =============================== */
-
-final qaList = QA.fromData(qaData);
-
-final quiz = QAState.fromQAList(qaList);
+List<QaState> quiz = QaState.fromData(qaData);
