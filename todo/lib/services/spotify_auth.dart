@@ -1,6 +1,4 @@
-// ignore_for_file: avoid_print
-
-import "package:flutter_web_auth/flutter_web_auth.dart";
+import "package:flutter_web_auth_2/flutter_web_auth_2.dart";
 import "dart:convert";
 import "dart:math";
 import "package:crypto/crypto.dart";
@@ -55,26 +53,11 @@ class SpotifyAuth {
     return json.decode(resp.body) as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> _fetchSpotifyUser(String accessToken) async {
-    final url = Uri.parse('https://api.spotify.com/v1/me');
-
-    final resp = await http.get(
-      url,
-      headers: {'Authorization': 'Bearer $accessToken'},
-    );
-
-    if (resp.statusCode != 200) {
-      throw Exception(
-        'Failed to load profile: ${resp.statusCode} ${resp.body}',
-      );
-    }
-
-    return json.decode(resp.body) as Map<String, dynamic>;
-  }
-
   // =====================================================
 
-  Future signIn() async {
+  Future<Map<String, dynamic>> signIn() async {
+    //
+
     final codeVerifier = _generateRandomString(128);
     final codeChallenge = _base64UrlNoPadding(
       sha256.convert(utf8.encode(codeVerifier)).bytes,
@@ -90,15 +73,18 @@ class SpotifyAuth {
       'redirect_uri': redirectUri,
     }).toString();
 
+    // =========================================
+
     // send request to spotify & got response - auth_result
-    final authResult = await FlutterWebAuth.authenticate(
+    final authResult = await FlutterWebAuth2.authenticate(
       url: authUrl,
-      callbackUrlScheme: Uri.parse(redirectUri).scheme,
+      callbackUrlScheme: "taskmaster",
     );
 
-    // from authResult returnedUri taken & authCode is taken from returned Uri
     final returnedUri = Uri.parse(authResult);
+
     final authCode = returnedUri.queryParameters['code'];
+
     if (authCode == null) throw Exception("No code returned by spotify");
 
     // =========================================
@@ -108,13 +94,32 @@ class SpotifyAuth {
 
     // got accessToken from tokenResponse
     final accessToken = tokenResponse['access_token'] as String;
+    final refreshToken =
+        tokenResponse['refresh_token'] as String?; // can be null
 
-    // fetching user data to know everything worked well
-    final user = await _fetchSpotifyUser(accessToken);
-
-    // end for now.
-    print("User Data => Name : ${user['display_name']}");
-    print("=================================================");
-    print(user);
+    return {
+      //
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+    };
   }
 }
+
+// =====================================================
+
+Future<Map<String, dynamic>> fetchSpotifyUser(String accessToken) async {
+  final url = Uri.parse('https://api.spotify.com/v1/me');
+
+  final resp = await http.get(
+    url,
+    headers: {'Authorization': 'Bearer $accessToken'},
+  );
+
+  if (resp.statusCode != 200) {
+    throw Exception('Failed to load profile: ${resp.statusCode} ${resp.body}');
+  }
+
+  return json.decode(resp.body) as Map<String, dynamic>;
+}
+
+// =====================================================

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/main_screen.dart';
+import 'package:todo/state/session_manager.dart';
 
-void main() => runApp(const TodoApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SessionManager.load();
+  runApp(const TodoApp());
+}
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});

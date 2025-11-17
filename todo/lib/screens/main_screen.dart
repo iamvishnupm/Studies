@@ -13,10 +13,9 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    CenterFeature(icon: Icons.access_time),
-    CenterFeature(icon: Icons.calendar_today),
-    CenterFeature(icon: Icons.checklist),
-    // CenterFeature(icon: Icons.person),
+    CenterFeature(icon: Icons.access_time, label: "Alarm"),
+    CenterFeature(icon: Icons.calendar_today, label: "Calendar"),
+    CenterFeature(icon: Icons.checklist, label: "Todo"),
     ProfileScreen(),
   ];
 
