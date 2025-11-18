@@ -1,4 +1,4 @@
-import "package:flutter_web_auth/flutter_web_auth.dart";
+import "package:flutter_web_auth_2/flutter_web_auth_2.dart";
 import "dart:convert";
 import "dart:math";
 import "package:crypto/crypto.dart";
@@ -56,13 +56,14 @@ class SpotifyAuth {
   // =====================================================
 
   Future<Map<String, dynamic>> signIn() async {
-    // =========================================
+    //
 
     final codeVerifier = _generateRandomString(128);
     final codeChallenge = _base64UrlNoPadding(
       sha256.convert(utf8.encode(codeVerifier)).bytes,
     );
 
+    // authUrl made
     final authUrl = Uri.https("accounts.spotify.com", "/authorize", {
       'response_type': 'code',
       'client_id': clientId,
@@ -74,25 +75,33 @@ class SpotifyAuth {
 
     // =========================================
 
-    final authResult = await FlutterWebAuth.authenticate(
+    // send request to spotify & got response - auth_result
+    final authResult = await FlutterWebAuth2.authenticate(
       url: authUrl,
       callbackUrlScheme: "taskmaster",
     );
 
-    final authCode = Uri.parse(authResult).queryParameters['code'];
+    final returnedUri = Uri.parse(authResult);
+
+    final authCode = returnedUri.queryParameters['code'];
 
     if (authCode == null) throw Exception("No code returned by spotify");
 
     // =========================================
 
+    // tokenResponse contains access_token, refresh_token, expires_in
     final tokenResponse = await _exchangeCodeForToken(authCode, codeVerifier);
 
+    // got accessToken from tokenResponse
     final accessToken = tokenResponse['access_token'] as String;
-    final refreshToken = tokenResponse['access_token'] as String?;
+    final refreshToken =
+        tokenResponse['refresh_token'] as String?; // can be null
 
-    // =========================================
-
-    return {'accessToken': accessToken, 'refreshToken': refreshToken};
+    return {
+      //
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+    };
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/widgets/center_feature.dart';
 import 'package:todo/screens/profile_screen.dart';
-// import 'package:todo/screens/alarm_screen.dart';
+import 'package:todo/screens/alarm_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,7 +14,7 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    // AlarmScreen(),
+    AlarmScreen(),
     CenterFeature(icon: Icons.access_time, label: "Alarm"),
     CenterFeature(icon: Icons.calendar_today, label: "Calendar"),
     CenterFeature(icon: Icons.checklist, label: "Todo"),
