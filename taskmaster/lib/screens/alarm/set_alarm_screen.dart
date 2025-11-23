@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:taskmaster/utils/functions.dart";
-import "package:taskmaster/screens/music_screen.dart";
+import "package:taskmaster/screens/music/music_screen.dart";
 
 class SetAlarmScreen extends StatefulWidget {
   const SetAlarmScreen({super.key});
@@ -66,9 +66,7 @@ class _SetAlarmScreenState extends State<SetAlarmScreen> {
                 fontSize: 20,
               ),
             ),
-            onPressed: () {
-              loadScreen(context, MusicScreen());
-            },
+            onPressed: () => loadScreen1(context, MusicScreen()),
             icon: Icon(Icons.music_note, color: Colors.white, size: 20),
             //
           ),

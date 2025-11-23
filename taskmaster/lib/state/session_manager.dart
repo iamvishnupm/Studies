@@ -12,6 +12,12 @@ class SessionManager {
     final stored = await SecureStorage.loadTokens();
     accessToken = stored["accessToken"];
     refreshToken = stored["refreshToken"];
+
+    if (accessToken != null) {
+      userData = await fetchSpotifyUser(accessToken!);
+    } else {
+      await clear();
+    }
   }
 
   static Future<void> save({
@@ -24,11 +30,6 @@ class SessionManager {
 
     try {
       userData = await fetchSpotifyUser(access);
-      print("**********************************************");
-      print("access : $accessToken");
-      print("refresh : $refreshToken");
-      print("$userData");
-      print("**********************************************");
     } catch (_) {
       userData = null;
     }

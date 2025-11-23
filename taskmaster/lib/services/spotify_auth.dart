@@ -9,7 +9,14 @@ class SpotifyAuth {
   final String clientId = "df3804485412425daa68014cd30ac2ad";
   final String redirectUri = "taskmaster://callback";
   final String scopes =
-      "playlist-read-private playlist-read-collaborative user-read-playback-state user-modify-playback-state streaming";
+      "playlist-read-private "
+      "playlist-read-collaborative "
+      "user-read-playback-state "
+      "user-modify-playback-state "
+      "streaming "
+      "user-top-read "
+      "user-read-recently-played "
+      "user-library-read";
 
   String _generateRandomString(int length) {
     const chars =

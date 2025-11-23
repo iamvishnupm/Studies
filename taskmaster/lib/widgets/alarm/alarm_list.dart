@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:taskmaster/widgets/alarm_item.dart";
+import "package:taskmaster/widgets/alarm/alarm_item.dart";
 
 class AlarmList extends StatelessWidget {
   final List<String> alarmList;

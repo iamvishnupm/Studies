@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:taskmaster/screens/alarm/set_alarm_screen.dart";
 import "package:taskmaster/screens/alarm/alarm_screen.dart";
-import 'package:flutter/cupertino.dart';
 
 class AlarmTab extends StatefulWidget {
   const AlarmTab({super.key});
@@ -35,11 +34,12 @@ class AlarmTabState extends State<AlarmTab> {
         }
 
         // return CupertinoPageRoute(builder: (_) => page);
-        // return MaterialPageRoute(builder: (_) => page);
-        return PageRouteBuilder(
-          opaque: true,
-          pageBuilder: (_, __, ___) => page,
-        );
+        // return PageRouteBuilder(
+        //   opaque: true,
+        //   pageBuilder: (_, __, ___) => page,
+        // );
+
+        return MaterialPageRoute(builder: (_) => page);
       },
     );
   }

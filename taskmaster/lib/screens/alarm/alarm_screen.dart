@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:taskmaster/widgets/clock.dart";
-import "package:taskmaster/widgets/alarm_list.dart";
+import "package:taskmaster/widgets/alarm/clock.dart";
+import "package:taskmaster/widgets/alarm/alarm_list.dart";
 
 class AlarmScreen extends StatelessWidget {
   final VoidCallback setAlarm;

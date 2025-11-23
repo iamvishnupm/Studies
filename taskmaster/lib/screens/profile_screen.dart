@@ -16,10 +16,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _signInToSpotify() async {
     try {
       await auth.signIn();
-
-      print("Successsssssssssssssssssssssssssssssssssss");
-      print("**********************************************");
-
       setState(() {});
     } catch (e) {
       print("Auth failed : $e");

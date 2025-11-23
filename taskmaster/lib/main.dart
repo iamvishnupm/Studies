@@ -4,7 +4,6 @@ import "package:taskmaster/state/session_manager.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await SessionManager.load();
   runApp(TaskMaster());
 }
@@ -19,8 +18,12 @@ class TaskMaster extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFF0F1720),
+        // scaffoldBackgroundColor: const Color(0xFF0F1720),
         // canvasColor: Colors.black,
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: const Color(0xFF0F1720),
+        ),
       ),
       home: MainScreen(),
     );
