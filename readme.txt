@@ -10,6 +10,6 @@ Since I have been learning something in old ways till now, I decided to start ov
 
 From now on I am going to learn everything through building things. this is a revolutionary experiment to see how good I can do if I start to learn stuff the new way I described. With the help of AI, I believe this will be a big success.
 
-As part of this journey I decided to build mobile applications with flutter first. I want that skill so much. it is so important in current world. after that I will revise & upgrade my knowledge on Data Science & AI by doing some projects. finally I want to learn blockchain. so I will do some projects on blockchain or I will just try to build something that include Flutter, AI & Blockchain. 
+I have zero clue if this will work or not. but I believe this would be billion times better than the boring traditional method of learning.
 
-This is the current plan, I have zero clue if this will work or not. but I believe this would be billion times better than the boring traditional method of learning.
+This is just an experimental journey, let's see what happens.
