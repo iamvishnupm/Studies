@@ -17,7 +17,7 @@ class StartScreen extends StatelessWidget {
         Image.asset("images/logo.png", width: 300),
         SizedBox(height: 80),
         ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: onPress,
           label: Text("Start"),
           icon: Icon(Icons.play_arrow),
         ),
