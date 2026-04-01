@@ -1,4 +1,6 @@
 import "package:exp/data/expense_data.dart";
+import "package:exp/models/expense.dart";
+import "package:exp/widgets/expense_item.dart";
 import "package:flutter/material.dart";
 
 class ExpenseListWidget extends StatefulWidget {
@@ -9,52 +11,48 @@ class ExpenseListWidget extends StatefulWidget {
 }
 
 class _ExpenseListWidgetState extends State<ExpenseListWidget> {
+  //
+
+  void _removeExpense(Expense expense) {
+    //
+
+    final int index = expenseList.indexOf(expense);
+
+    setState(() {
+      expenseList.remove(expense);
+    });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text("Expense Deleted"),
+        action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              expenseList.insert(index, expense);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(context) {
-    return ListView(
-      children: expenseList
-          .map(
-            (expense) => Card(
-              color: Colors.white70,
-              margin: EdgeInsets.all(8),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  //
-                                  expense.title,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Icon(expense.icon, size: 18),
-                            ],
-                          ),
-                        ),
-                        Text(expense.formattedDate),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Row(
-                      children: [
-                        //
-                        Text("\$${expense.amount}"),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-          .toList(),
+    return ListView.builder(
+      itemCount: expenseList.length,
+      itemBuilder: (context, index) {
+        //
+        return Dismissible(
+          key: ValueKey(expenseList[index]),
+          onDismissed: (direction) {
+            //
+            _removeExpense(expenseList[index]);
+          },
+          child: ExpenseItem(expense: expenseList[index]),
+        );
+      },
     );
   }
 }

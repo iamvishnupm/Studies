@@ -16,14 +16,14 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  Category? selectedCategory = Category.fun;
+  Category? selectedCategory;
   DateTime? selectedDate;
 
   void _openDatePicker() async {
-    DateTime now = DateTime.now();
-    DateTime firstDate = DateTime(now.year - 5, now.month, now.day);
+    final DateTime now = DateTime.now();
+    final DateTime firstDate = DateTime(now.year - 5, now.month, now.day);
 
-    DateTime? pickedDate = await showDatePicker(
+    final DateTime? pickedDate = await showDatePicker(
       context: context,
       firstDate: firstDate,
       lastDate: now,
@@ -33,6 +33,51 @@ class _NewExpenseState extends State<NewExpense> {
     setState(() {
       selectedDate = pickedDate;
     });
+  }
+
+  void _addNewExpense() {
+    final title = _titleController.text;
+    final amount = double.tryParse(_amountController.text);
+
+    if (
+    //
+    title.isEmpty ||
+        amount == null ||
+        selectedCategory == null ||
+        selectedDate == null
+    //
+    ) {
+      //
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: const Text("Invalid Options"),
+            content: const Text("Make sure all options are provided and valid"),
+            actions: [
+              ElevatedButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text("Ok"),
+              ),
+            ],
+          );
+        },
+      );
+
+      return;
+    }
+
+    print("adding expense");
+
+    widget.addNewExpense(
+      Expense(
+        title: title,
+        amount: amount,
+        category: selectedCategory!,
+        date: selectedDate!,
+      ),
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -45,7 +90,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(context) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           //
@@ -58,7 +103,7 @@ class _NewExpenseState extends State<NewExpense> {
               Expanded(
                 child: TextField(
                   controller: _titleController,
-                  decoration: InputDecoration(labelText: "Title"),
+                  decoration: const InputDecoration(labelText: "Title"),
                 ),
               ),
               TextButton.icon(
@@ -68,7 +113,7 @@ class _NewExpenseState extends State<NewExpense> {
                       ? dateFormatter.format(selectedDate!)
                       : "Select Date",
                 ),
-                icon: Icon(Icons.calendar_month),
+                icon: const Icon(Icons.calendar_month),
               ),
             ],
           ),
@@ -82,7 +127,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: TextField(
                   keyboardType: TextInputType.number,
                   controller: _amountController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     //
                     prefixText: "\$ ",
                     labelText: "Amount",
@@ -92,9 +137,9 @@ class _NewExpenseState extends State<NewExpense> {
 
               DropdownButton<Category>(
                 value: selectedCategory,
-                underline: SizedBox(), // 🚀 removes line
-                icon: Icon(Icons.keyboard_arrow_down),
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                underline: const SizedBox(), // 🚀 removes line
+                icon: const Icon(Icons.keyboard_arrow_down),
+                style: const TextStyle(fontSize: 16, color: Colors.black),
                 borderRadius: BorderRadius.circular(50),
                 items: Category.values.map((c) {
                   return DropdownMenuItem(
@@ -102,7 +147,7 @@ class _NewExpenseState extends State<NewExpense> {
                     value: c,
                     child: Padding(
                       //
-                      padding: EdgeInsets.symmetric(horizontal: 24),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Text(c.name),
                     ),
                   );
@@ -116,7 +161,7 @@ class _NewExpenseState extends State<NewExpense> {
             ],
           ),
 
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           // ===============================
           //  3rd row
@@ -128,22 +173,12 @@ class _NewExpenseState extends State<NewExpense> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Cancel"),
+                child: const Text("Cancel"),
               ),
               ElevatedButton(
                 //
-                onPressed: () {
-                  widget.addNewExpense(
-                    Expense(
-                      title: _titleController.text,
-                      amount: double.parse(_amountController.text),
-                      category: selectedCategory!,
-                      date: selectedDate!,
-                    ),
-                  );
-                  Navigator.pop(context);
-                },
-                child: Text("Submit"),
+                onPressed: _addNewExpense,
+                child: const Text("Submit"),
               ),
             ],
           ),

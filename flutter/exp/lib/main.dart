@@ -24,9 +24,10 @@ class ExpenseTracker extends StatefulWidget {
 class _ExpenseTrackerState extends State<ExpenseTracker> {
   //
 
-  void _addExpense() {
+  void _addExpenseScreen() {
     showModalBottomSheet(
       //
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(addNewExpense: addNewExpense),
     );
@@ -42,13 +43,13 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
   Widget build(context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Expense Tracker"),
+        title: const Text("Expense Tracker"),
         actions: [
           //
-          IconButton(onPressed: _addExpense, icon: Icon(Icons.add)),
+          IconButton(onPressed: _addExpenseScreen, icon: Icon(Icons.add)),
         ],
       ),
-      body: ExpenseListWidget(),
+      body: SafeArea(child: ExpenseListWidget()),
     );
   }
 }
