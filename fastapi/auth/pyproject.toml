@@ -1,0 +1,10 @@
+# in turth this file is not needed currently.
+# just added so I would know about a file like this.
+
+[project]
+name = "auth"
+version = "0.1.0"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
