@@ -11,7 +11,7 @@ from fastapi import FastAPI
 from auth.db.base import Base
 from auth.db.database import engine
 
-from auth.api.users import get_data, login_user, register_user
+from auth.routes.user import get_data, login_user, register_user
 
 # ===========================================
 
